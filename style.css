@@ -15,6 +15,7 @@
   --royal:  #1E3F66;
   --azure:  #3E6B9C;
   --paper:  #FAFBFD;
+  --bg:     #B8C7DE; /* page background — darker blue-grey for more contrast */
   --mist:   #E7EDF5;
   --mist-2: #D7E2F0;
   --gilt:   #B7944F;
@@ -32,7 +33,7 @@
 html{ scroll-behavior: smooth; }
 body{
   margin:0;
-  background: var(--paper);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--body);
   font-weight: 400;
@@ -197,7 +198,7 @@ header.site{
 .hero{
   position: relative;
   overflow:hidden;
-  background: linear-gradient(180deg, var(--paper) 0%, var(--mist) 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--mist) 100%);
 }
 .hero-grid{
   max-width: var(--max);
@@ -573,7 +574,7 @@ footer.site{
 .page-head{
   padding: 60px 0 40px;
   border-bottom: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--paper), var(--mist));
+  background: linear-gradient(180deg, var(--bg), var(--mist));
 }
 .breadcrumb{
   font-size:.78rem;
