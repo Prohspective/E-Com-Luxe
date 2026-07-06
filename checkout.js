@@ -9,21 +9,33 @@
  * already defines — it does NOT redeclare them, so there's no conflict.
  */
 
-async function startCheckout() {
-  const items = Cart.read(); // [{ id, qty }, ...] — from your existing Cart object
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (items.length === 0) {
-    showToast("Your bag is empty");
-    return;
+function openCheckoutModal(){
+  const modal = document.querySelector('[data-checkout-modal]');
+  if(!modal) return;
+  modal.classList.add('is-open');
+  const input = modal.querySelector('[data-checkout-email]');
+  const error = modal.querySelector('[data-checkout-error]');
+  if(error) error.textContent = '';
+  if(input){
+    input.value = '';
+    setTimeout(() => input.focus(), 50);
   }
+}
 
-  const email = window.prompt("Enter your email for your receipt:");
-  if (!email) return; // user cancelled
+function closeCheckoutModal(){
+  document.querySelector('[data-checkout-modal]')?.classList.remove('is-open');
+}
 
-  const checkoutBtn = document.querySelector("[data-checkout-btn]");
-  if (checkoutBtn) {
-    checkoutBtn.disabled = true;
-    checkoutBtn.textContent = "Redirecting to checkout...";
+async function submitCheckout(email){
+  const items = Cart.read(); // [{ id, qty }, ...] — from your existing Cart object
+  const modal = document.querySelector('[data-checkout-modal]');
+  const submitBtn = modal?.querySelector('[data-checkout-submit]');
+
+  if(submitBtn){
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Redirecting…';
   }
 
   try {
@@ -46,19 +58,53 @@ async function startCheckout() {
     }
   } catch (err) {
     showToast(err.message || "Something went wrong. Please try again.");
-    if (checkoutBtn) {
-      checkoutBtn.disabled = false;
-      checkoutBtn.textContent = "Checkout";
+    if(submitBtn){
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Continue";
     }
   }
 }
 
-// Wire up every "Checkout" button in the cart drawer (there's one per page)
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("[data-checkout-btn]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+function initCheckoutModal(){
+  const modal = document.querySelector('[data-checkout-modal]');
+  if(!modal) return;
+
+  const form = modal.querySelector('[data-checkout-form]');
+  const input = modal.querySelector('[data-checkout-email]');
+  const error = modal.querySelector('[data-checkout-error]');
+  const cancelBtn = modal.querySelector('[data-checkout-cancel]');
+
+  // Every "Checkout" button in the cart drawer (there's one per page)
+  document.querySelectorAll('[data-checkout-btn]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
-      startCheckout();
+      if(Cart.read().length === 0){
+        showToast("Your bag is empty");
+        return;
+      }
+      openCheckoutModal();
     });
   });
-});
+
+  cancelBtn?.addEventListener('click', closeCheckoutModal);
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) closeCheckoutModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && modal.classList.contains('is-open')) closeCheckoutModal();
+  });
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = input?.value.trim() || '';
+    if(!EMAIL_RE.test(email)){
+      if(error) error.textContent = 'Please enter a valid email address.';
+      input?.focus();
+      return;
+    }
+    if(error) error.textContent = '';
+    submitCheckout(email);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initCheckoutModal);

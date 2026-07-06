@@ -361,6 +361,43 @@ function initFeatured(){
   initReveal();
 }
 
+/* ---------------- Scroll to top / bottom toggle ---------------- */
+function initScrollToggle(){
+  const btn = document.querySelector('[data-scroll-toggle]');
+  if(!btn) return;
+
+  const SHOW_AFTER = 240; // px scrolled before the button appears
+
+  function nearBottom(){
+    const scrollBottom = window.scrollY + window.innerHeight;
+    return scrollBottom >= document.documentElement.scrollHeight - 80;
+  }
+
+  function update(){
+    const y = window.scrollY;
+    btn.classList.toggle('is-visible', y > SHOW_AFTER || nearBottom());
+
+    if(nearBottom()){
+      btn.classList.add('at-bottom');
+      btn.setAttribute('aria-label', 'Scroll to top');
+    } else {
+      btn.classList.remove('at-bottom');
+      btn.setAttribute('aria-label', 'Scroll to bottom');
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    if(btn.classList.contains('at-bottom')){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+    }
+  });
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
 /* ---------------- Header scroll state ---------------- */
 function initHeaderScroll(){
   const header = document.querySelector('[data-site-header]');
@@ -381,4 +418,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initFeatured(); // calls initReveal() internally for featured cards
   initReveal();  // picks up all remaining static .reveal elements
   initHeaderScroll();
+  initScrollToggle();
 });

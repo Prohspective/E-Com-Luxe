@@ -156,6 +156,41 @@ header.site{
 }
 .icon-btn:hover{ border-color: var(--azure); background: var(--mist); }
 
+/* ---------------- Scroll to top / bottom toggle ---------------- */
+.scroll-toggle{
+  position: fixed;
+  right: 26px;
+  bottom: 26px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -10px rgba(11,31,58,0.45);
+  z-index: 80;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease, background .2s ease;
+}
+.scroll-toggle.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scroll-toggle:hover{ background: var(--royal); }
+.scroll-toggle svg{ width: 18px; height: 18px; transition: transform .3s ease; }
+.scroll-toggle.at-bottom svg{ transform: rotate(180deg); }
+
+@media (max-width: 640px){
+  .scroll-toggle{ right: 16px; bottom: 16px; width: 42px; height: 42px; }
+}
+
 .burger{
   display:none;
   flex-direction:column;
@@ -787,6 +822,42 @@ footer.site{
 .cart-foot{ padding: 20px var(--pad) 28px; border-top: 1px solid var(--line); }
 .cart-foot .row{ display:flex; justify-content:space-between; margin-bottom:14px; font-size:.95rem; }
 .cart-empty{ text-align:center; padding: 60px 20px; color: var(--royal); }
+
+/* ---------- Checkout email modal ---------- */
+.checkout-modal{
+  position:fixed; inset:0;
+  z-index: 95;
+  display:flex; align-items:center; justify-content:center;
+  padding: 20px;
+  opacity:0; visibility:hidden;
+  transition: opacity var(--speed);
+}
+.checkout-modal.is-open{ opacity:1; visibility:visible; }
+.checkout-modal .cm-panel{
+  background: var(--paper);
+  width: min(400px, 100%);
+  border-radius: 8px;
+  padding: 32px 28px;
+  box-shadow: 0 24px 60px -20px rgba(11,31,58,0.5);
+  transform: translateY(12px);
+  transition: transform var(--speed);
+}
+.checkout-modal.is-open .cm-panel{ transform: translateY(0); }
+.checkout-modal h3{ font-size: 1.3rem; margin-bottom: 6px; }
+.checkout-modal p{ color: var(--azure); font-size: .88rem; margin-bottom: 18px; }
+.checkout-modal input{
+  width:100%; padding: 12px 14px; border:1px solid var(--line); border-radius: 6px;
+  font-family: var(--body); font-size: .95rem; margin-bottom: 8px;
+}
+.checkout-modal input:focus{ outline: 2px solid var(--azure); border-color: transparent; }
+.cm-error{ color:#B33; font-size:.8rem; min-height: 1.1em; margin-bottom: 10px; }
+.cm-actions{ display:flex; gap:10px; margin-top: 8px; }
+.cm-actions .btn{ flex:1; justify-content:center; }
+.cm-actions button[type="button"]{
+  background:none; border:1px solid var(--line); color: var(--ink);
+  border-radius:999px; padding: 12px 20px; font-size:.85rem; cursor:pointer;
+}
+.cm-actions button[type="button"]:hover{ background: var(--mist); }
 
 /* ---------- Toast ---------- */
 .toast{

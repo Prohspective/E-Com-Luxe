@@ -402,6 +402,50 @@
       <a href="contact.html">Contact</a>
     </nav>
 
+    <!-- ===================== CHECKOUT EMAIL MODAL ===================== -->
+    <div class="checkout-modal" data-checkout-modal>
+      <div class="cm-panel">
+        <h3>Almost there</h3>
+        <p>Enter your email so we can send your receipt and order updates.</p>
+        <form data-checkout-form novalidate>
+          <input
+            type="email"
+            required
+            placeholder="you@email.com"
+            aria-label="Email address"
+            data-checkout-email
+          />
+          <div class="cm-error" data-checkout-error></div>
+          <div class="cm-actions">
+            <button type="button" data-checkout-cancel>Cancel</button>
+            <button type="submit" class="btn btn-solid" data-checkout-submit>
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===================== SCROLL TOP/BOTTOM TOGGLE ===================== -->
+    <button
+      class="scroll-toggle"
+      data-scroll-toggle
+      aria-label="Scroll to bottom"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          d="M12 4v16M6 14l6 6 6-6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+
     <div class="toast" data-toast></div>
 
     <script src="script.js"></script>
