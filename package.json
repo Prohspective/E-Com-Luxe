@@ -2,9 +2,11 @@
   "name": "luxe-en-vogue-checkout",
   "version": "1.0.0",
   "private": true,
-  "description": "Requires PAYSTACK_SECRET_KEY (and optionally PUBLIC_BASE_URL) to be set as environment variables in the Vercel project settings. See /api/create-checkout-session.js for details. No extra dependencies needed — uses Node 18+ native fetch.",
+  "description": "Requires PAYSTACK_SECRET_KEY (and optionally PUBLIC_BASE_URL) to be set as environment variables in the Vercel project settings. See /api/create-checkout-session.js for details. Order storage uses Vercel KV (Upstash Redis) — see /api/verify-order.js for the required KV_REST_API_URL / KV_REST_API_TOKEN env vars, which Vercel sets automatically once a KV store is attached to the project (Storage tab -> Create Database -> KV, then Connect Project). ADMIN_SECRET is optional and only needed if you add the admin status-update endpoint.",
   "engines": {
     "node": ">=18"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@vercel/kv": "^2.0.0"
+  }
 }

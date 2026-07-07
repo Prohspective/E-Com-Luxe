@@ -893,6 +893,65 @@ footer.site{
 .reveal{ opacity:0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.is-visible{ opacity:1; transform:none; }
 
+/* ---------- Track order page ---------- */
+.track-form{
+  background: var(--mist);
+  border-radius: 8px;
+  padding: clamp(28px,4vw,40px);
+}
+.track-form .field label{ font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; color: var(--royal); margin-bottom:8px; display:block; }
+.track-form .field input{
+  width:100%;
+  border: 1px solid var(--mist-2);
+  background: var(--paper);
+  border-radius: 6px;
+  padding: 13px 14px;
+  font-family: var(--body);
+  font-size: .95rem;
+  color: var(--ink);
+}
+.track-form .field input:focus{ border-color: var(--azure); outline:none; }
+
+.track-order-card{
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(22px,3vw,32px);
+  margin-bottom: 24px;
+  background: var(--paper);
+}
+.track-order-head{ display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:22px; gap:12px; }
+.track-order-ref{ font-family: var(--display); font-size: 1.1rem; font-weight:600; color: var(--ink); }
+.track-order-date{ font-size:.82rem; color: var(--azure); margin-top:4px; }
+.status-badge{
+  display:inline-block; padding: 6px 16px; border-radius: 999px;
+  font-size:.72rem; letter-spacing:.05em; text-transform:uppercase;
+  background: var(--ink); color: var(--paper); white-space:nowrap;
+}
+.status-badge.status-delivered{ background:#2E7D32; }
+.status-badge.status-shipped{ background: var(--azure); }
+.status-badge.status-processing{ background: var(--royal); }
+.status-badge.status-paid{ background: var(--ink); }
+
+.status-timeline{
+  display:flex; justify-content:space-between; position:relative; margin: 28px 0 26px;
+}
+.status-timeline::before{
+  content:''; position:absolute; top:6px; left:6%; right:6%; height:2px; background: var(--mist-2); z-index:0;
+}
+.status-step{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:8px; flex:1; }
+.status-dot{ width:13px; height:13px; border-radius:50%; background: var(--mist-2); border: 2px solid var(--paper); box-shadow: 0 0 0 1px var(--mist-2); }
+.status-step.done .status-dot{ background: var(--azure); box-shadow: 0 0 0 1px var(--azure); }
+.status-step.current .status-dot{ background: var(--ink); box-shadow: 0 0 0 3px var(--mist); }
+.status-label{ font-size:.72rem; letter-spacing:.03em; text-transform:uppercase; color: var(--royal); text-align:center; }
+.status-step.current .status-label{ color: var(--ink); font-weight:600; }
+
+.track-items{ border-top: 1px solid var(--line); padding-top: 14px; }
+.track-item-row{ display:flex; justify-content:space-between; padding:8px 0; font-size:.9rem; color: var(--royal); }
+.track-order-total{
+  display:flex; justify-content:space-between; padding-top:14px; margin-top:8px;
+  border-top: 1px solid var(--line); font-weight:600; font-size:1.02rem; color: var(--ink);
+}
+
 /* ==========================================================================
    Responsive
    ========================================================================== */

@@ -113,6 +113,12 @@ module.exports = async function handler(req, res) {
         email: email.trim(),
         amount: total, // kobo
         callback_url: callbackUrl,
+        metadata: {
+          // Stashed so /api/verify-order.js can reconstruct line items
+          // after payment without trusting anything from the client at
+          // that point — only the reference is passed back by Paystack.
+          items: cart.map((item) => ({ id: item.id, qty: Number(item.qty) })),
+        },
       }),
     });
   } catch (err) {

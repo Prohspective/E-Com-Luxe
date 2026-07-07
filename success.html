@@ -16,21 +16,96 @@
       "
     >
       <h1>🎉 Thank you for your order!</h1>
-      <p>Your payment was successful. A confirmation email is on its way.</p>
-      <p id="session-info" style="color: #888; font-size: 0.9em"></p>
-      <a href="index.html">← Back to shop</a>
+      <p data-success-message>
+        Your payment was successful. A confirmation email is on its way.
+      </p>
+
+      <div data-order-summary></div>
+
+      <p style="margin-top: 30px">
+        <a href="index.html">← Back to shop</a>
+        &nbsp;·&nbsp;
+        <a data-track-link href="track-order.html">Track this order</a>
+      </p>
     </main>
 
     <script>
-      // Clear the cart now that payment succeeded
+      // Clear the cart now that payment succeeded (the checkout was already
+      // completed regardless of whether verification below succeeds).
       localStorage.removeItem("lev_cart_v1");
 
-      // Optional: show a reference if Paystack included one in the URL
+      function nairaFormat(n) {
+        return "₦" + Number(n || 0).toLocaleString("en-NG");
+      }
+
+      function renderSummary(order) {
+        const el = document.querySelector("[data-order-summary]");
+        if (!el) return;
+
+        const itemsHtml = (order.items || [])
+          .map((it) => {
+            const label = it.id ? it.id : "Order item";
+            const lineTotal = (it.price || 0) * (it.qty || 1);
+            return `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #E7EDF5;font-size:.9rem;">
+              <span>${label}${it.qty > 1 ? " × " + it.qty : ""}</span>
+              <span>${nairaFormat(lineTotal)}</span>
+            </div>`;
+          })
+          .join("");
+
+        el.innerHTML = `
+          <div style="margin-top:30px;border:1px solid #E7EDF5;border-radius:8px;padding:24px;text-align:left;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+              <strong>Order ${order.reference}</strong>
+              <span style="background:#0B1F3A;color:#FAFBFD;border-radius:999px;padding:4px 12px;font-size:.75rem;letter-spacing:.03em;">${order.status}</span>
+            </div>
+            ${itemsHtml}
+            <div style="display:flex;justify-content:space-between;padding-top:14px;font-weight:600;">
+              <span>Total</span><span>${nairaFormat(order.total)}</span>
+            </div>
+          </div>`;
+      }
+
+      async function verifyAndRender(reference) {
+        const messageEl = document.querySelector("[data-success-message]");
+        try {
+          const res = await fetch(
+            "/api/verify-order?reference=" + encodeURIComponent(reference),
+          );
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || !data.order) {
+            if (messageEl) {
+              messageEl.textContent =
+                data.error ||
+                "We couldn't confirm this payment yet. If you were charged, contact us with your reference below.";
+            }
+            return;
+          }
+
+          renderSummary(data.order);
+
+          // Wire the "track this order" link with prefilled email/reference
+          const trackLink = document.querySelector("[data-track-link]");
+          if (trackLink) {
+            const params = new URLSearchParams({
+              email: data.order.email,
+              reference: data.order.reference,
+            });
+            trackLink.href = "track-order.html?" + params.toString();
+          }
+        } catch (err) {
+          if (messageEl) {
+            messageEl.textContent =
+              "We couldn't reach our server to confirm this payment. Please check your email for a receipt, or contact us.";
+          }
+        }
+      }
+
       const params = new URLSearchParams(window.location.search);
       const reference = params.get("reference") || params.get("trxref");
       if (reference) {
-        document.getElementById("session-info").textContent =
-          "Order reference: " + reference;
+        verifyAndRender(reference);
       }
     </script>
   </body>
