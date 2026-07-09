@@ -103,7 +103,10 @@ function renderOrders() {
     visible = visible.filter(
       (o) =>
         o.email?.toLowerCase().includes(search) ||
-        o.reference?.toLowerCase().includes(search)
+        o.reference?.toLowerCase().includes(search) ||
+        o.shipping?.name?.toLowerCase().includes(search) ||
+        o.shipping?.phone?.toLowerCase().includes(search) ||
+        o.shipping?.address?.toLowerCase().includes(search)
     );
   }
 
@@ -160,6 +163,15 @@ function renderOrderCard(order) {
     )
     .join("");
 
+  const shipping = order.shipping;
+  const shippingHtml = shipping
+    ? `<div class="order-shipping">
+        <strong>${shipping.name || "—"}</strong><br/>
+        ${shipping.phone || "—"}<br/>
+        ${(shipping.address || "—").replace(/\n/g, "<br/>")}
+      </div>`
+    : `<div class="order-shipping order-shipping-missing">No delivery address on file for this order.</div>`;
+
   return `
   <div class="order-card">
     <div class="order-card-head">
@@ -172,6 +184,8 @@ function renderOrderCard(order) {
     </div>
     <div class="order-items">${itemsHtml}</div>
     <div class="order-total-row"><span>Total</span><span>${nairaFormat(order.total)}</span></div>
+    <div class="order-section-label">Ship to</div>
+    ${shippingHtml}
     <div class="order-controls">
       <label style="font-size:.8rem;color:var(--royal)">Update status:</label>
       <select data-status-select="${order.reference}">${optionsHtml}</select>

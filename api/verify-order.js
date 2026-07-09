@@ -5,7 +5,7 @@
  *
  * Accepts: GET  /api/verify-order?reference=xxxx
  *          POST { reference }
- * Returns: 200 { order: { reference, email, items, total, status, createdAt } }
+ * Returns: 200 { order: { reference, email, items, total, status, shipping, createdAt } }
  *          4xx/5xx { error: "message" } on failure
  *
  * Verifies the transaction directly with Paystack (never trusts the client's
@@ -135,6 +135,13 @@ module.exports = async function handler(req, res) {
     items,
     total: tx.amount,
     status: "Paid",
+    shipping: tx.metadata && tx.metadata.shipping
+      ? {
+          name: tx.metadata.shipping.name || "",
+          phone: tx.metadata.shipping.phone || "",
+          address: tx.metadata.shipping.address || "",
+        }
+      : null,
     createdAt: new Date(tx.paid_at || tx.created_at || Date.now()).toISOString(),
   };
 

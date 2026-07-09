@@ -225,15 +225,43 @@
     <div class="checkout-modal" data-checkout-modal>
       <div class="cm-panel">
         <h3>Almost there</h3>
-        <p>Enter your email so we can send your receipt and order updates.</p>
+        <p>Enter your details so we know where to send your order.</p>
         <form data-checkout-form novalidate>
+          <label for="checkout-name">Full name</label>
           <input
+            id="checkout-name"
+            type="text"
+            required
+            placeholder="Full name"
+            aria-label="Full name"
+            data-checkout-name
+          />
+          <label for="checkout-email">Email address</label>
+          <input
+            id="checkout-email"
             type="email"
             required
             placeholder="you@email.com"
             aria-label="Email address"
             data-checkout-email
           />
+          <label for="checkout-phone">Phone number</label>
+          <input
+            id="checkout-phone"
+            type="tel"
+            required
+            placeholder="+234 8xx xxx xxxx"
+            aria-label="Phone number"
+            data-checkout-phone
+          />
+          <label for="checkout-address">Delivery address</label>
+          <textarea
+            id="checkout-address"
+            required
+            placeholder="Street address, city, state"
+            aria-label="Delivery address"
+            data-checkout-address
+          ></textarea>
           <div class="cm-error" data-checkout-error></div>
           <div class="cm-actions">
             <button type="button" data-checkout-cancel>Cancel</button>

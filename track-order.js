@@ -47,6 +47,16 @@ function renderOrderCard(order) {
     })
     .join("");
 
+  const shipping = order.shipping;
+  const shippingHtml = shipping
+    ? `<div class="track-shipping">
+        <div class="track-shipping-label">Shipping to</div>
+        <strong>${shipping.name || ""}</strong><br/>
+        ${shipping.phone || ""}<br/>
+        ${(shipping.address || "").replace(/\n/g, "<br/>")}
+      </div>`
+    : "";
+
   return `
   <div class="track-order-card reveal is-visible">
     <div class="track-order-head">
@@ -61,6 +71,7 @@ function renderOrderCard(order) {
     <div class="track-order-total">
       <span>Total</span><strong>${nairaFormat(order.total)}</strong>
     </div>
+    ${shippingHtml}
   </div>`;
 }
 

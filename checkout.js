@@ -15,12 +15,18 @@ function openCheckoutModal(){
   const modal = document.querySelector('[data-checkout-modal]');
   if(!modal) return;
   modal.classList.add('is-open');
-  const input = modal.querySelector('[data-checkout-email]');
+  const nameInput = modal.querySelector('[data-checkout-name]');
+  const emailInput = modal.querySelector('[data-checkout-email]');
+  const phoneInput = modal.querySelector('[data-checkout-phone]');
+  const addressInput = modal.querySelector('[data-checkout-address]');
   const error = modal.querySelector('[data-checkout-error]');
   if(error) error.textContent = '';
-  if(input){
-    input.value = '';
-    setTimeout(() => input.focus(), 50);
+  if(nameInput) nameInput.value = '';
+  if(phoneInput) phoneInput.value = '';
+  if(addressInput) addressInput.value = '';
+  if(emailInput){
+    emailInput.value = '';
+    setTimeout(() => emailInput.focus(), 50);
   }
 }
 
@@ -28,7 +34,7 @@ function closeCheckoutModal(){
   document.querySelector('[data-checkout-modal]')?.classList.remove('is-open');
 }
 
-async function submitCheckout(email){
+async function submitCheckout(details){
   const items = Cart.read(); // [{ id, qty }, ...] — from your existing Cart object
   const modal = document.querySelector('[data-checkout-modal]');
   const submitBtn = modal?.querySelector('[data-checkout-submit]');
@@ -42,7 +48,13 @@ async function submitCheckout(email){
     const response = await fetch("/api/create-checkout-session", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cart: items, email })
+      body: JSON.stringify({
+        cart: items,
+        email: details.email,
+        name: details.name,
+        phone: details.phone,
+        address: details.address
+      })
     });
 
     if (!response.ok) {
@@ -70,7 +82,10 @@ function initCheckoutModal(){
   if(!modal) return;
 
   const form = modal.querySelector('[data-checkout-form]');
-  const input = modal.querySelector('[data-checkout-email]');
+  const nameInput = modal.querySelector('[data-checkout-name]');
+  const emailInput = modal.querySelector('[data-checkout-email]');
+  const phoneInput = modal.querySelector('[data-checkout-phone]');
+  const addressInput = modal.querySelector('[data-checkout-address]');
   const error = modal.querySelector('[data-checkout-error]');
   const cancelBtn = modal.querySelector('[data-checkout-cancel]');
 
@@ -96,14 +111,33 @@ function initCheckoutModal(){
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const email = input?.value.trim() || '';
+    const name = nameInput?.value.trim() || '';
+    const email = emailInput?.value.trim() || '';
+    const phone = phoneInput?.value.trim() || '';
+    const address = addressInput?.value.trim() || '';
+
+    if(!name){
+      if(error) error.textContent = 'Please enter your full name.';
+      nameInput?.focus();
+      return;
+    }
     if(!EMAIL_RE.test(email)){
       if(error) error.textContent = 'Please enter a valid email address.';
-      input?.focus();
+      emailInput?.focus();
+      return;
+    }
+    if(!phone){
+      if(error) error.textContent = 'Please enter a phone number.';
+      phoneInput?.focus();
+      return;
+    }
+    if(!address){
+      if(error) error.textContent = 'Please enter your delivery address.';
+      addressInput?.focus();
       return;
     }
     if(error) error.textContent = '';
-    submitCheckout(email);
+    submitCheckout({ name, email, phone, address });
   });
 }
 

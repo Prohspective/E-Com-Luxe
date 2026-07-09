@@ -50,7 +50,7 @@ module.exports = async function handler(req, res) {
   }
   body = body || {};
 
-  const { cart, email } = body;
+  const { cart, email, name, phone, address } = body;
 
   if (!Array.isArray(cart) || cart.length === 0) {
     return sendJSON(res, 400, { error: "Your bag is empty." });
@@ -58,6 +58,18 @@ module.exports = async function handler(req, res) {
 
   if (typeof email !== "string" || !EMAIL_RE.test(email.trim())) {
     return sendJSON(res, 400, { error: "Please enter a valid email address." });
+  }
+
+  if (typeof name !== "string" || !name.trim()) {
+    return sendJSON(res, 400, { error: "Please enter your full name." });
+  }
+
+  if (typeof phone !== "string" || !phone.trim()) {
+    return sendJSON(res, 400, { error: "Please enter a phone number." });
+  }
+
+  if (typeof address !== "string" || !address.trim()) {
+    return sendJSON(res, 400, { error: "Please enter your delivery address." });
   }
 
   // --- Recompute total server-side from CATALOG (never trust client price) --
@@ -118,6 +130,11 @@ module.exports = async function handler(req, res) {
           // after payment without trusting anything from the client at
           // that point — only the reference is passed back by Paystack.
           items: cart.map((item) => ({ id: item.id, qty: Number(item.qty) })),
+          shipping: {
+            name: name.trim(),
+            phone: phone.trim(),
+            address: address.trim(),
+          },
         },
       }),
     });
