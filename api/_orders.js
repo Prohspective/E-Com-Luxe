@@ -7,6 +7,9 @@
  * KV KEY SHAPE:
  *   order:<reference>          -> JSON string of the order object
  *   orders_by_email:<email>     -> JSON string array of reference strings
+ *   all_orders                  -> JSON string array of every reference string
+ *                                   (used by the admin dashboard to list all
+ *                                   orders without needing a customer's email)
  *
  * REQUIRED ENV VARS (auto-set by Vercel once a KV store is attached to the
  * project — Storage tab -> Create Database -> KV -> Connect Project):
@@ -32,6 +35,8 @@ function emailIndexKey(email) {
   return `orders_by_email:${normalizeEmail(email)}`;
 }
 
+const ALL_ORDERS_KEY = "all_orders";
+
 async function getOrder(reference) {
   if (!reference) return null;
   const data = await kv.get(orderKey(reference));
@@ -53,12 +58,36 @@ async function saveOrder(order) {
     await kv.set(idxKey, JSON.stringify(existing));
   }
 
+  // Also keep a global index of every order reference, so the admin
+  // dashboard can list all orders without knowing customer emails.
+  const allRaw = await kv.get(ALL_ORDERS_KEY);
+  const allRefs = allRaw
+    ? (typeof allRaw === "string" ? JSON.parse(allRaw) : allRaw)
+    : [];
+
+  if (!allRefs.includes(order.reference)) {
+    allRefs.push(order.reference);
+    await kv.set(ALL_ORDERS_KEY, JSON.stringify(allRefs));
+  }
+
   return order;
 }
 
 async function getOrdersByEmail(email) {
   const idxKey = emailIndexKey(email);
   const raw = await kv.get(idxKey);
+  const references = raw
+    ? (typeof raw === "string" ? JSON.parse(raw) : raw)
+    : [];
+
+  const orders = await Promise.all(references.map((ref) => getOrder(ref)));
+  return orders.filter(Boolean).sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+}
+
+async function getAllOrders() {
+  const raw = await kv.get(ALL_ORDERS_KEY);
   const references = raw
     ? (typeof raw === "string" ? JSON.parse(raw) : raw)
     : [];
@@ -87,5 +116,6 @@ module.exports = {
   getOrder,
   saveOrder,
   getOrdersByEmail,
+  getAllOrders,
   updateOrderStatus,
 };
