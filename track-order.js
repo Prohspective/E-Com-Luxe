@@ -146,4 +146,7 @@ function initTrackOrderForm() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", initTrackOrderForm);
+document.addEventListener("DOMContentLoaded", async () => {
+  await window.__productsReady;
+  initTrackOrderForm();
+});

@@ -50,6 +50,26 @@ function nairaFormat(n){
   return '₦' + n.toLocaleString('en-NG');
 }
 
+/* ---------------- Merge in WhatsApp-approved products ----------------
+   These are products added via WhatsApp and approved in admin.html. The
+   38 products above are untouched — this just appends to the same array
+   once the fetch resolves. Other scripts (track-order.js) and script.js's
+   own init await `window.__productsReady` before reading PRODUCTS, so
+   nothing races ahead of this. If the fetch fails, the static catalogue
+   above still works exactly as before. */
+window.__productsReady = (async function loadExtraProducts(){
+  try{
+    const res = await fetch('/api/products');
+    if(!res.ok) return;
+    const data = await res.json();
+    if(Array.isArray(data.products)){
+      data.products.forEach(p => PRODUCTS.push(p));
+    }
+  }catch(e){
+    // Network hiccup or endpoint not deployed yet — fail soft.
+  }
+})();
+
 /* ---------------- Garment line-art icons (inline SVG strings) ---------------- */
 const ICONS = {
   blazer:`<svg viewBox="0 0 120 140" fill="none" stroke="#1E3F66" stroke-width="2"><path d="M60 10 L40 26 L20 22 L8 50 L22 58 L26 130 H94 L98 58 L112 50 L100 22 L80 26 Z"/><path d="M60 10 L60 50 M44 26 L60 50 L76 26" /><circle cx="60" cy="74" r="2.2" fill="#1E3F66"/><circle cx="60" cy="92" r="2.2" fill="#1E3F66"/></svg>`,
@@ -408,7 +428,8 @@ function initHeaderScroll(){
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await window.__productsReady;
   Cart.render();
   initMobileNav();
   initCartDrawer();

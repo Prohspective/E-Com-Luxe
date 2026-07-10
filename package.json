@@ -2,11 +2,12 @@
   "name": "luxe-en-vogue-checkout",
   "version": "1.0.0",
   "private": true,
-  "description": "Requires PAYSTACK_SECRET_KEY (and optionally PUBLIC_BASE_URL) to be set as environment variables in the Vercel project settings. See /api/create-checkout-session.js for details. Order storage uses Vercel KV (Upstash Redis) — see /api/verify-order.js for the required KV_REST_API_URL / KV_REST_API_TOKEN env vars, which Vercel sets automatically once a KV store is attached to the project (Storage tab -> Create Database -> KV, then Connect Project). ADMIN_SECRET is optional and only needed if you add the admin status-update endpoint.",
+  "description": "Requires PAYSTACK_SECRET_KEY (and optionally PUBLIC_BASE_URL) as env vars — see /api/create-checkout-session.js. Order storage uses Vercel KV (Upstash Redis) — KV_REST_API_URL / KV_REST_API_TOKEN, auto-set once a KV store is attached (Storage tab -> Create Database -> KV -> Connect Project). ADMIN_SECRET guards /api/all-orders, /api/update-order-status, /api/pending-products, /api/approve-product, and /api/reject-product. WhatsApp product uploads need WHATSAPP_VERIFY_TOKEN, WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID, and ADMIN_WHATSAPP_NUMBER — see /api/whatsapp-webhook.js. Product photos are stored with Vercel Blob (BLOB_READ_WRITE_TOKEN, auto-set once Blob storage is attached — Storage tab -> Create Database -> Blob -> Connect Project).",
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "@vercel/kv": "^2.0.0"
+    "@vercel/kv": "^2.0.0",
+    "@vercel/blob": "^0.27.0"
   }
 }
