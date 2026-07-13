@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In — Luxe En Vogue</title>
+    <meta name="description" content="Sign in to your Luxe En Vogue account." />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="shortcut icon"
+      href="images/favicon (1).ico"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="strip">
+      Complimentary shipping on orders over ₦80,000 · New arrivals weekly
+    </div>
+
+    <header class="site" data-site-header>
+      <nav class="nav">
+        <a href="index.html" class="logo"
+          >Luxe En Vogue <span class="mark">EST. 2026</span></a
+        >
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="shop.html">Shop</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <div class="nav-auth" data-auth-nav>
+            <a href="signin.html" class="nav-auth-link">Sign in</a>
+          </div>
+          <a href="#" class="icon-btn" data-cart-open aria-label="Open bag">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#0B1F3A"
+              stroke-width="2"
+            >
+              <path d="M6 6h15l-1.5 9h-12z" />
+              <path d="M6 6 4 2H2" />
+              <circle cx="9" cy="20" r="1.4" fill="#0B1F3A" />
+              <circle cx="18" cy="20" r="1.4" fill="#0B1F3A" />
+            </svg>
+          </a>
+          <span data-cart-count style="font-size: 0.78rem; color: #1e3f66"
+            >0</span
+          >
+          <button class="burger" data-burger aria-label="Open menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ===================== SIGN IN ===================== -->
+    <section class="auth-section">
+      <div class="container">
+        <div class="auth-card">
+          <p class="eyebrow">Welcome back</p>
+          <h1>Sign in</h1>
+          <p class="auth-sub">Sign in to track orders and check out faster.</p>
+          <p class="auth-error" data-signin-server-error></p>
+
+          <button type="button" class="auth-google-btn" data-google-btn>
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path
+                fill="#4285F4"
+                d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.84 2.09-1.8 2.73v2.27h2.91c1.7-1.57 2.69-3.87 2.69-6.64z"
+              />
+              <path
+                fill="#34A853"
+                d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.91-2.27c-.81.54-1.85.86-3.05.86-2.34 0-4.33-1.58-5.04-3.71H.96v2.33A9 9 0 0 0 9 18z"
+              />
+              <path
+                fill="#FBBC05"
+                d="M3.96 10.7A5.4 5.4 0 0 1 3.68 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l3-2.33z"
+              />
+              <path
+                fill="#EA4335"
+                d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l3 2.33C4.67 5.16 6.66 3.58 9 3.58z"
+              />
+            </svg>
+            Continue with Google
+          </button>
+
+          <div class="auth-divider">or sign in with email</div>
+
+          <form class="auth-form" data-signin-form novalidate>
+            <label for="signin-email">Email address</label>
+            <input
+              id="signin-email"
+              type="email"
+              required
+              placeholder="you@email.com"
+              autocomplete="email"
+              data-signin-email
+            />
+            <label for="signin-password">Password</label>
+            <input
+              id="signin-password"
+              type="password"
+              required
+              placeholder="Your password"
+              autocomplete="current-password"
+              data-signin-password
+            />
+            <div class="auth-error" data-signin-error></div>
+            <button
+              type="submit"
+              class="btn btn-solid auth-submit"
+              data-signin-submit
+            >
+              Sign in
+            </button>
+          </form>
+
+          <p class="auth-footer-note">
+            New to Luxe En Vogue? <a href="signup.html">Create an account</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site">
+      <div class="container">
+        <div class="foot-grid">
+          <div>
+            <div class="foot-logo">Luxe En Vogue</div>
+            <p>
+              Considered clothing in indigo and ivory — designed in small
+              batches for a wardrobe that lasts.
+            </p>
+            <div class="foot-social">
+              <a
+                href="https://www.instagram.com/bigsucre_?igsh=aHhoZmRheDVmMGEw"
+                aria-label="Instagram"
+                target="_blank"
+                >IG</a
+              >
+              <a
+                href="https://www.facebook.com/Prohspective?mibextid=ZbWKwL"
+                aria-label="Facebook"
+                target="_blank"
+                >FB</a
+              >
+              <a
+                href="https://x.com/_Magus_1"
+                aria-label="Twitter"
+                target="_blank"
+                >X</a
+              >
+            </div>
+          </div>
+          <div class="foot-col">
+            <h4>Shop</h4>
+            <ul>
+              <li><a href="shop.html">All products</a></li>
+              <li><a href="shop.html">Outerwear</a></li>
+              <li><a href="shop.html">Dresses</a></li>
+              <li><a href="shop.html">Knitwear</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html">About us</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="contact.html#faq">FAQ</a></li>
+              <li><a href="track-order.html">Track your order</a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h4>Stay in touch</h4>
+            <ul>
+              <li>luxeenvogue1@gmail.com</li>
+              <li>+234 811 081 8037</li>
+              <li>Ibadan, Nigeria</li>
+            </ul>
+          </div>
+        </div>
+        <div class="foot-bottom">
+          <span>© 2026 Luxe En Vogue. All rights reserved.</span>
+          <span>Privacy Policy · Terms of Service</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===================== CART DRAWER ===================== -->
+    <div class="overlay" data-overlay></div>
+    <aside class="cart-drawer" data-cart-drawer aria-label="Shopping bag">
+      <div class="cart-head">
+        <h3 style="font-size: 1.3rem">Your bag</h3>
+        <button
+          data-cart-close
+          aria-label="Close bag"
+          style="
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+          "
+        >
+          &times;
+        </button>
+      </div>
+      <div class="cart-items" data-cart-items></div>
+      <div class="cart-foot" data-cart-foot>
+        <div class="row">
+          <span>Subtotal</span><strong data-cart-total>₦0</strong>
+        </div>
+        <button
+          data-checkout-btn
+          class="btn btn-solid"
+          style="width: 100%; justify-content: center"
+        >
+          Checkout
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===================== MOBILE NAV ===================== -->
+    <nav class="mobile-nav" data-mobile-nav>
+      <button
+        class="mobile-nav-close"
+        data-mobile-close
+        aria-label="Close menu"
+      >
+        &times;
+      </button>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="signin.html" data-mobile-auth-link>Sign in</a>
+    </nav>
+
+    <div class="toast" data-toast></div>
+
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+    <script src="checkout.js"></script>
+  </body>
+</html>
