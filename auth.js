@@ -2,7 +2,7 @@
    LUXE EN VOGUE — Auth
    Handles: nav sign-in/account state, sign up form, sign in form,
    "Continue with Google" buttons, sign out.
-   Session is a cookie set by the /api/auth-* endpoints — this file
+   Session is a cookie set by the /api/auth/[action] endpoint — this file
    just calls them and reflects the result in the UI.
    ========================================================================== */
 
@@ -14,7 +14,7 @@ async function initAuthNav() {
 
   let user = null;
   try {
-    const res = await fetch('/api/auth-session');
+    const res = await fetch('/api/auth/session');
     if (res.ok) {
       const data = await res.json();
       user = data.user;
@@ -43,7 +43,7 @@ async function initAuthNav() {
 
 async function signOut() {
   try {
-    await fetch('/api/auth-logout', { method: 'POST' });
+    await fetch('/api/auth/logout', { method: 'POST' });
   } catch (e) {
     // Even if the request fails, send the user back to a logged-out view.
   }
@@ -54,7 +54,7 @@ async function signOut() {
 function initGoogleButtons() {
   document.querySelectorAll('[data-google-btn]').forEach((btn) => {
     btn.addEventListener('click', () => {
-      window.location.href = '/api/auth-google';
+      window.location.href = '/api/auth/google';
     });
   });
 }
@@ -88,7 +88,7 @@ function initSignupForm() {
     submitBtn.textContent = 'Creating account…';
 
     try {
-      const res = await fetch('/api/auth-signup', {
+      const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password }),
@@ -130,7 +130,7 @@ function initSigninForm() {
     submitBtn.textContent = 'Signing in…';
 
     try {
-      const res = await fetch('/api/auth-login', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
