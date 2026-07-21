@@ -1088,7 +1088,6 @@ footer.site{
   /* ---- Header: extra-narrow phones — drop the tagline, shrink everything ---- */
   .nav{ padding: 12px var(--pad); }
   .logo{ font-size: 1.05rem; }
-  .logo .mark{ display:none; }
   .nav-cta{ gap: 8px; }
   .icon-btn{ width: 34px; height: 34px; }
   [data-cart-count]{ font-size: .72rem; }
