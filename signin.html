@@ -19,6 +19,9 @@
 
     <header class="site" data-site-header>
       <nav class="nav">
+        <button class="burger" data-burger aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
         <a href="index.html" class="logo"
           >Luxe En Vogue <span class="mark">EST. 2026</span></a
         >
@@ -48,11 +51,22 @@
             >0</span
           >
           <div class="nav-auth" data-auth-nav>
-            <a href="signin.html" class="btn btn-ghost btn-sm">Sign in</a>
+            <a href="signin.html" class="btn btn-ghost btn-sm"
+              ><svg
+                class="nav-auth-icon"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#0B1F3A"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg
+              ><span class="nav-auth-text">Sign in</span></a
+            >
           </div>
-          <button class="burger" data-burger aria-label="Open menu">
-            <span></span><span></span><span></span>
-          </button>
         </div>
       </nav>
     </header>
