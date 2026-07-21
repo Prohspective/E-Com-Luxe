@@ -993,30 +993,21 @@ footer.site{
   .nav-links{ display:none; }
   .burger{ display:flex; }
 
-  /* ---- Header: phone-only layout ----
-     Logo stays left (with the EST. 2026 mark), everything else — bag
-     icon, bag count, burger, account icon — groups on the right, in
-     that order, so the burger sits right after the cart button instead
-     of on its own at the top-left. `.nav-cta` is flattened with
-     `display:contents` so its children (`.icon-btn`, `[data-cart-count]`,
-     `.nav-auth`) and the sibling `.burger` button can all be reordered
-     together as one flex group via the `order` property; `margin-left:auto`
-     on the cart button is what pushes that whole group to the right edge
-     while the logo stays put on the left. Desktop layout, where `.burger`
-     stays `display:none`, is completely untouched. */
+  /* ---- Header: Louis-Vuitton-style layout on phones only ----
+     menu (burger) pinned top-left, logo centered, account/bag icons
+     top-right. The burger button now lives in the markup as a direct
+     child of `.nav` (moved out of `.nav-cta`), which lets the three
+     land in their own grid column independently. Desktop layout,
+     where `.burger` stays `display:none`, is completely untouched. */
   .nav{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 14px;
     padding: 14px var(--pad);
   }
-  .logo{ order: 1; font-size: 1.2rem; gap: 6px; }
-  .nav-links{ order: 2; }
-  .nav-cta{ display: contents; }
-  .nav-cta .icon-btn{ order: 3; margin-left: auto; }
-  .nav-cta [data-cart-count]{ order: 4; }
-  .burger{ order: 5; }
-  .nav-cta .nav-auth{ order: 6; }
+  .burger{ grid-column: 1; justify-self: start; }
+  .logo{ grid-column: 2; justify-self: center; font-size: 1.2rem; gap: 6px; }
+  .nav-cta{ grid-column: 3; justify-self: end; }
 
   /* Sign in — becomes a round icon (like the bag icon) instead of text */
   .nav-auth{ display: flex; }
