@@ -991,24 +991,60 @@ footer.site{
   .foot-grid{ grid-template-columns: 1fr; gap:30px; }
   .form-row{ grid-template-columns: 1fr; }
   .newsletter{ flex-direction:column; align-items:flex-start; }
+
+  /* ---- Hero: give it room to breathe on phones ---- */
+  .hero-grid{
+    gap: 8px;
+    padding: 28px var(--pad) 44px;
+  }
+  .hero-art{
+    margin-bottom: 4px;
+  }
+  .hero-art svg{ max-width: 240px; }
+  .badge-rotate{
+    width: 78px;
+    height: 78px;
+    top: -8px;
+    right: 2%;
+  }
+  .hero h1{
+    font-size: clamp(2rem, 8vw, 2.5rem);
+    line-height: 1.1;
+  }
+  .hero-sub{
+    margin-top: 16px;
+    max-width: 100%;
+    font-size: .95rem;
+  }
+  .hero .hero-actions{
+    margin-top: 26px;
+    gap: 12px;
+  }
+  .hero .hero-actions .btn{
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-stats{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin-top: 34px;
+    text-align: center;
+  }
+  .hero-stats div strong{ font-size: 1.4rem; }
+  .hero-stats div span{ font-size: .62rem; letter-spacing: .06em; }
 }
 @media (max-width: 480px){
   .grid-4, .grid-3{ grid-template-columns: 1fr; }
-  .hero-stats{ gap:24px; flex-wrap:wrap; }
+  .hero-art svg{ max-width: 190px; }
+  .badge-rotate{ width: 64px; height: 64px; }
+  .hero h1{ font-size: clamp(1.8rem, 9vw, 2.2rem); }
 }
 
 /* ---------- Nav auth slot ---------- */
 .nav-auth{ display:flex; align-items:center; gap:14px; font-size:.85rem; }
-.nav-auth-link{ color: var(--royal); transition: color var(--speed); }
-.nav-auth-link:hover{ color: var(--ink); }
 .nav-auth-user{ display:flex; align-items:center; gap:12px; }
 .nav-auth-name{ color: var(--ink); font-weight:500; }
-.nav-auth-signout{
-  background:none; border:none; cursor:pointer; padding:0;
-  font-family: var(--body); font-size:.8rem; color: var(--azure);
-  text-decoration: underline; text-underline-offset: 3px;
-}
-.nav-auth-signout:hover{ color: var(--ink); }
 
 /* ---------- Auth pages (sign up / sign in) ---------- */
 .auth-section{

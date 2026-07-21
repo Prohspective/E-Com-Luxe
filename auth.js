@@ -28,7 +28,7 @@ async function initAuthNav() {
       slot.innerHTML = `
         <div class="nav-auth-user">
           <span class="nav-auth-name">${user.name.split(' ')[0]}</span>
-          <button type="button" class="nav-auth-signout" data-signout-btn>Sign out</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-signout-btn>Sign out</button>
         </div>`;
       slot.querySelector('[data-signout-btn]').addEventListener('click', signOut);
     }
