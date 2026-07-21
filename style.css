@@ -987,6 +987,16 @@ footer.site{
 @media (max-width: 720px){
   .nav-links{ display:none; }
   .burger{ display:flex; }
+
+  /* ---- Header: tighten up so logo + icons don't crowd/wrap on phones ---- */
+  .nav{ padding: 14px var(--pad); }
+  .logo{ font-size: 1.2rem; gap: 6px; }
+  .nav-cta{ gap: 12px; }
+  /* Sign in/out already lives in the mobile drawer — no need to duplicate it here */
+  .nav-auth{ display:none; }
+
+  .strip{ font-size: .66rem; letter-spacing: .1em; line-height: 1.5; padding: 8px 14px; }
+
   .grid-4, .grid-3{ grid-template-columns: 1fr 1fr; }
   .foot-grid{ grid-template-columns: 1fr; gap:30px; }
   .form-row{ grid-template-columns: 1fr; }
@@ -1039,6 +1049,15 @@ footer.site{
   .hero-art svg{ max-width: 190px; }
   .badge-rotate{ width: 64px; height: 64px; }
   .hero h1{ font-size: clamp(1.8rem, 9vw, 2.2rem); }
+
+  /* ---- Header: extra-narrow phones — drop the tagline, shrink everything ---- */
+  .nav{ padding: 12px var(--pad); }
+  .logo{ font-size: 1.05rem; }
+  .logo .mark{ display:none; }
+  .nav-cta{ gap: 8px; }
+  .icon-btn{ width: 34px; height: 34px; }
+  [data-cart-count]{ font-size: .72rem; }
+  .burger{ width: 22px; gap: 4px; }
 }
 
 /* ---------- Nav auth slot ---------- */
