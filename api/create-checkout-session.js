@@ -25,7 +25,6 @@
  */
 
 const CATALOG = require("../catalog");
-const { getApprovedProducts } = require("./_products");
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PAYSTACK_INIT_URL = "https://api.paystack.co/transaction/initialize";
@@ -74,19 +73,6 @@ module.exports = async function handler(req, res) {
   }
 
   // --- Recompute total server-side from CATALOG (never trust client price) --
-  // Prices for WhatsApp-approved products live in KV, not in the static
-  // CATALOG, so we fetch that list once and check both.
-  let approvedProducts = [];
-  try {
-    approvedProducts = await getApprovedProducts();
-  } catch (err) {
-    console.error("Could not load approved WhatsApp products:", err);
-    // Fall through — static-catalogue items still check out fine.
-  }
-  const approvedById = Object.fromEntries(
-    approvedProducts.map((p) => [p.id, p.price])
-  );
-
   let total = 0;
   for (const item of cart) {
     if (!item || typeof item !== "object") {
@@ -94,7 +80,7 @@ module.exports = async function handler(req, res) {
     }
 
     const { id, qty } = item;
-    const price = CATALOG[id] ?? approvedById[id];
+    const price = CATALOG[id];
 
     if (price === undefined) {
       return sendJSON(res, 400, { error: `Unknown product: ${id}` });

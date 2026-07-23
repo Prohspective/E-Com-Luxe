@@ -164,115 +164,6 @@
       .admin-hidden {
         display: none !important;
       }
-      .admin-tabs {
-        display: flex;
-        gap: 6px;
-        margin-bottom: 22px;
-        border-bottom: 1px solid var(--line);
-      }
-      .admin-tab {
-        background: none;
-        border: none;
-        padding: 10px 16px;
-        font-family: var(--body);
-        font-size: 0.9rem;
-        color: var(--royal);
-        cursor: pointer;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -1px;
-      }
-      .admin-tab.is-active {
-        color: var(--ink);
-        border-bottom-color: var(--ink);
-        font-weight: 600;
-      }
-      .admin-tab-badge {
-        display: inline-block;
-        min-width: 18px;
-        padding: 1px 6px;
-        border-radius: 999px;
-        background: #b33;
-        color: #fff;
-        font-size: 0.72rem;
-        text-align: center;
-      }
-      .admin-tab-badge:empty {
-        display: none;
-      }
-      .pending-intro {
-        color: var(--royal);
-        font-size: 0.88rem;
-        max-width: 640px;
-        margin-bottom: 20px;
-        line-height: 1.6;
-      }
-      .pending-card {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        gap: 18px;
-        background: var(--paper);
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        padding: 18px;
-        margin-bottom: 16px;
-      }
-      .pending-thumb {
-        width: 120px;
-        height: 140px;
-        border-radius: 8px;
-        overflow: hidden;
-        background: var(--mist);
-      }
-      .pending-thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .pending-fields {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-      .pending-fields .full {
-        grid-column: 1 / -1;
-      }
-      .pending-fields label {
-        display: block;
-        font-size: 0.72rem;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-        color: var(--royal);
-        margin-bottom: 4px;
-      }
-      .pending-fields input {
-        width: 100%;
-        padding: 8px 10px;
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        font-family: var(--body);
-        font-size: 0.85rem;
-      }
-      .pending-meta {
-        font-size: 0.75rem;
-        color: var(--azure);
-        grid-column: 1 / -1;
-      }
-      .pending-actions {
-        grid-column: 1 / -1;
-        display: flex;
-        gap: 10px;
-        margin-top: 4px;
-      }
-      @media (max-width: 640px) {
-        .pending-card {
-          grid-template-columns: 1fr;
-        }
-        .pending-thumb {
-          width: 100%;
-          height: 200px;
-        }
-      }
     </style>
   </head>
   <body>
@@ -306,17 +197,6 @@
         <button class="btn btn-ghost btn-sm" data-admin-logout>Log out</button>
       </div>
 
-      <div class="admin-tabs">
-        <button class="admin-tab is-active" data-admin-tab="orders">
-          Orders
-        </button>
-        <button class="admin-tab" data-admin-tab="pending">
-          Pending Products
-          <span class="admin-tab-badge" data-pending-badge></span>
-        </button>
-      </div>
-
-      <!-- ---- Orders tab ---- -->
       <div data-admin-panel="orders">
         <div class="admin-toolbar">
           <input
@@ -337,21 +217,6 @@
         </div>
 
         <div data-admin-orders></div>
-      </div>
-
-      <!-- ---- Pending Products tab ---- -->
-      <div data-admin-panel="pending" class="admin-hidden">
-        <p class="pending-intro">
-          Products you’ve sent from WhatsApp land here first. Review the photo
-          and details, fix anything WhatsApp got wrong, then approve to publish
-          to the live shop — or reject to discard it.
-        </p>
-        <div class="admin-toolbar">
-          <button class="btn btn-ghost btn-sm" data-pending-refresh>
-            Refresh
-          </button>
-        </div>
-        <div data-pending-list></div>
       </div>
     </div>
 

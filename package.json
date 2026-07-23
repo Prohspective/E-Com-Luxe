@@ -2,12 +2,11 @@
   "name": "luxe-en-vogue-checkout",
   "version": "1.0.0",
   "private": true,
-  "description": "Requires PAYSTACK_SECRET_KEY (and optionally PUBLIC_BASE_URL) as env vars — see /api/create-checkout-session.js. Order storage uses Vercel KV (Upstash Redis) — KV_REST_API_URL / KV_REST_API_TOKEN, auto-set once a KV store is attached (Storage tab -> Create Database -> KV -> Connect Project). ADMIN_SECRET guards /api/all-orders, /api/update-order-status, /api/pending-products, /api/approve-product, and /api/reject-product. WhatsApp product uploads need WHATSAPP_VERIFY_TOKEN, WHATSAPP_TOKEN, WHATSAPP_PHONE_NUMBER_ID, and ADMIN_WHATSAPP_NUMBER — see /api/whatsapp-webhook.js. Product photos are stored with Vercel Blob (BLOB_READ_WRITE_TOKEN, auto-set once Blob storage is attached — Storage tab -> Create Database -> Blob -> Connect Project). Sign up / sign in (session-based, stored in the same Vercel KV store) needs GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET for 'Continue with Google' — see /api/auth/[action].js, a single consolidated serverless function (Vercel dynamic route) handling signup/login/logout/session/google/google-callback, kept as one function to stay under the Hobby plan's 12-function-per-deployment limit. Google's authorized redirect URI must be set to https://<your-domain>/api/auth/google-callback. No new npm dependencies were added: password hashing uses Node's built-in crypto.scrypt and the Google OAuth exchange uses plain fetch calls.",
+  "description": "Requires PAYSTACK_SECRET_KEY (and optionally PUBLIC_BASE_URL) as env vars — see /api/create-checkout-session.js. Order storage uses Vercel KV (Upstash Redis) — KV_REST_API_URL / KV_REST_API_TOKEN, auto-set once a KV store is attached (Storage tab -> Create Database -> KV -> Connect Project). ADMIN_SECRET guards /api/all-orders and /api/update-order-status. Sign up / sign in (session-based, stored in the same Vercel KV store) needs GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET for 'Continue with Google' — see /api/auth/[action].js, a single consolidated serverless function (Vercel dynamic route) handling signup/login/logout/session/google/google-callback, kept as one function to stay under the Hobby plan's 12-function-per-deployment limit. Google's authorized redirect URI must be set to https://<your-domain>/api/auth/google-callback. No new npm dependencies were added: password hashing uses Node's built-in crypto.scrypt and the Google OAuth exchange uses plain fetch calls.",
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "@vercel/kv": "^2.0.0",
-    "@vercel/blob": "^0.27.0"
+    "@vercel/kv": "^2.0.0"
   }
 }
